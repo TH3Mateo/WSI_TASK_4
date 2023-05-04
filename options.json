@@ -114,4 +114,63 @@
         "Unmarried": 6
       }
     }
-}}
+},
+  "nursery": {
+    "filename": "nursery.data",
+    "columns": ["parents","has_nurs","form","children","housing","finance","social","health","decision"],
+"encodes": {
+      "parents": {
+        "usual": 1,
+        "pretentious": 2,
+        "great_pret": 3
+      },
+      "has_nurs": {
+        "proper": 1,
+        "less_proper": 2,
+        "improper": 3,
+        "critical": 4,
+        "very_crit": 5
+      },
+      "form": {
+        "complete": 1,
+        "completed": 2,
+        "incomplete": 3,
+        "foster": 4
+      },
+      "children": {
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "more": 4
+      },
+      "housing": {
+        "convenient": 1,
+        "less_conv": 2,
+        "critical": 3
+      },
+      "finance": {
+        "convenient": 1,
+        "inconv": 2
+      },
+      "social": {
+        "nonprob": 1,
+        "slightly_prob": 2,
+        "problematic": 3
+      },
+      "health": {
+        "recommended": 1,
+        "priority": 2,
+        "not_recom": 3
+      },
+      "decision": {
+        "not_recom": 1,
+        "recommend": 2,
+        "very_recom": 3,
+        "priority": 4,
+        "spec_prior": 5
+      }
+    }
+
+
+  }
+}

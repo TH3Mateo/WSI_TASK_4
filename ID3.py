@@ -29,9 +29,9 @@ class ID3_tree:
                 right_branch = self.build(best["right_x"],best["right_y"],current_depth+1)
                 # print("returning Node")
                 return Node(best["feature"],best["condition_value"],right_branch,left_branch,best["gain"])
-        else:
-            # print("returning leaf")
-            return Node(value = e.most_common(results))
+
+        # print("returning leaf")
+        return Node(value = e.most_common(results))
 
     def print_tree(self, tree=None, indent=" "):
         ''' function to print the tree '''
@@ -57,18 +57,18 @@ class ID3_tree:
     def predict(self, x, tree=None):
         ''' function to make predictions '''
 
-        if tree is None:
-            tree = self.root
-
-        if tree.value is not None:
+        if tree.value != None:
             return tree.value
-
-        feature_value = x[tree.feature]
-
-        if feature_value <= tree.condition_val:
+        feature_val = x[tree.feature]
+        if feature_val <= tree.condition_val:
             return self.predict(x, tree.left)
         else:
             return self.predict(x, tree.right)
+
+
+
+    # def predict(self,x,tree=None):
+    #
 
     def fit(self, samples, results):
         self.root = self.build(samples, results)

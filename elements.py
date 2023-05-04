@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import json
-import sys
+
 
 class Node:
     def __init__(self, feature = None, condition_val  = None,right = None, left = None, inf_gain = None, value = None):
@@ -24,14 +24,7 @@ def setup(dataset_name):
 
 
 def information_gain(y,left,right):
-    # print("y in info gain:")
-    # print(y)
-    # print("left in splitter:")
-    # print(left)
-    # print("right in splitter:")
-    # print(right)
-    # sys.exit()
-    # print(gini(y) - (len(left)/len(y))*gini(left) - (len(right)/len(y))*gini(right))
+
     return gini(y) - (len(left)/len(y))*gini(left) - (len(right)/len(y))*gini(right)
 
 
@@ -49,18 +42,16 @@ def gini(y):
 def splitter(x,y,samples_count, feature_count):
 
     df = pd.concat([x,y],axis = 1)
-    best_effect = {}
+
     max_gain = -float('inf')
     names = x.columns.values
     # print(feature_count)
 
     for i in range(feature_count):
 
-        # print(x.iloc[:,i])
-        # print(x.iloc[:,i])
         thresholds = np.unique(x.iloc[:,i])
 
-        # print(thresholds)
+
         for threshold in thresholds:
             # print(threshold)
             # print(x.iloc[1][i])
@@ -73,11 +64,11 @@ def splitter(x,y,samples_count, feature_count):
             # print(gain)
             if gain > max_gain:
                 max_gain = gain
-                print(gain)
-                print(left.drop(names[i],axis= 'columns'))
-                best_effect = {"feature":i,"condition_value":threshold,"left_x":left.drop([names[i],"decision"],axis= 'columns'),"right_x":right.drop([names[i],"decision"],axis = 'columns'),
-                                "left_y" :left[df.columns.values[-1]],"right_y": right[df.columns.values[-1]], "gain":max_gain}
 
+                best_effect = {"feature": i, "condition_value": threshold,
+                   "left_x": left.drop(["decision"], axis='columns'),
+                   "right_x": right.drop(["decision"], axis='columns'),
+                   "left_y": left[df.columns.values[-1]], "right_y": right[df.columns.values[-1]], "gain": max_gain}
     return best_effect
 
 def most_common(y):
@@ -105,13 +96,14 @@ def datasplitter(x,y,test_percent):
     return train_x, train_y, test_x, test_y
 
 
+def encode(column,keys):
+    return [keys.get(record) for record in column]
 
 def translate(x,config):
     # print(type(x))
     out= []
     # names = x.columns.values()
-    def encode(column,keys):
-        return [keys.get(record) for record in column]
+
 
     for n in range(len(x.iloc[0])):
         # print(x.columns.values)
@@ -127,8 +119,3 @@ def translate(x,config):
 
     return pd.DataFrame(np.transpose(out), columns=x.columns.values)
 
-    # print(len(x.iloc[0]))
-
-    # return pd.DataFrame((np.transpose([encode(x.iloc[:,n],val_keys.get(list((x.columns.values))[n]))for n in range(len(x.iloc[0]))if list(x.columns.values)[n] in val_keys])) )
-
-    # return [encode(x.iloc[:,i],i) for i in range(len(x.iloc[:,0]))]
